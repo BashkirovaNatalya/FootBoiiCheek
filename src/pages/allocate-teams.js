@@ -111,7 +111,6 @@ function AllocateTeams() {
     //
     // };
 
-
     const allocate = async () =>{
         const allocateRandomlyValue = await allocateRandomly(tournamentId);
         setAllocatedRandomly(allocateRandomlyValue);
