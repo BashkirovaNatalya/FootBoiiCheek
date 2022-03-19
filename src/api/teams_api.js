@@ -6,6 +6,12 @@ async function getTeams() {
     return data;
 }
 
+async function getFlags() {
+    // get flags list
+    const { data } = await $host.get('/api/teams/flags');
+    return data;
+}
+
 async function getTeam(teamId) {
     // get team data (id, name, pic_url, country, region, flags)
     const { data } = await $host.get('/api/teams/read', {
@@ -52,6 +58,7 @@ async function removeTeam(teamId) {
 
 export {
     getTeams,
+    getFlags,
     getTeam,
     getTeamPLayers,
     addTeam,

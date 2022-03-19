@@ -23,6 +23,9 @@ class TeamCustomEditorForm extends React.Component {
             })
         }
         this.setState({...obj})
+        obj.name = this.state?.team.name
+        obj.flag = this.state?.team.flag
+        obj.countryCode = this.state?.team.countryCode
 
         const players = await getTeamPLayers(obj['id'])
     }
@@ -48,25 +51,25 @@ class TeamCustomEditorForm extends React.Component {
     resolveControl(name, type, available= null, label = null) {
         if (!!available?.length && type !== FORM_CONTROL_TYPE.OBJECT) {
             return (<DropDownList key={name+type} label={label}
-                                  style={this.baseControlStyle} value={this.state[name]} data={available}
+                                  style={this.baseControlStyle} value={this.state?.dataItem[name]} data={available}
                                   onChange={  (e)=>this.onDataChangeHandle({...e, name})}>
             </DropDownList>)
         }
         switch (type) {
             case FORM_CONTROL_TYPE.DATE:
-                if(typeof this.state?.dataItem?.[name] === 'string') {
+                if(typeof this.state?.team?.[name] === 'string') {
                     this.setState({
-                        dataItem: {...this.state.dataItem, [name]: new Date(this.state?.dataItem?.[name]) }
+                        dataItem: {...this.state.dataItem, [name]: new Date(this.state?.team?.[name]) }
                     })
                 }else {
-                    if (this.state?.dataItem?.[name] == null) {
+                    if (this.state?.team?.[name] == null) {
                         this.setState({
                             dataItem: {...this.state.dataItem, [name]: new Date() }
                         })
                     }
                 }
 
-                return (<DatePicker key={name+type} label={label} style={this.baseControlStyle} name={name} value={this.state?.dataItem?.[name]} onChange={
+                return (<DatePicker key={name+type} label={label} style={this.baseControlStyle} name={name} value={this.state?.team?.[name]} onChange={
                     (e)=>this.onDataChangeHandle({...e, name})}/>);
             case FORM_CONTROL_TYPE.NUMBER:
                 return (<div style={{...this.baseControlStyle, display:'Contents'}}>
@@ -75,7 +78,7 @@ class TeamCustomEditorForm extends React.Component {
                         key={name+type}
                         label={label}
                         name={name}
-                        value={this.state?.dataItem?.[name]}
+                        value={this.state?.team?.[name]}
                         onChange={  (e)=>this.onDataChangeHandle({...e, name})}/>
                 </div>);
             case FORM_CONTROL_TYPE.STRING:
@@ -85,7 +88,7 @@ class TeamCustomEditorForm extends React.Component {
                         label={label}
                         style={this.baseControlStyle}
                         name={name}
-                        value={this.state?.dataItem?.[name]}
+                        value={this.state?.team?.[name]}
                         onChange={  (e)=>this.onDataChangeHandle({...e, name})}/>
                 );
             case FORM_CONTROL_TYPE.BOOL:
@@ -95,7 +98,7 @@ class TeamCustomEditorForm extends React.Component {
                         style={this.baseControlStyle}
                         label={label}
                         name={name}
-                        value={this.state?.dataItem?.[name]}
+                        value={this.state?.team?.[name]}
                         onChange={(e)=>this.onDataChangeHandle({...e, name})}/>);
             case FORM_CONTROL_TYPE.OBJECT:
                 if (!available || !available?.length){
