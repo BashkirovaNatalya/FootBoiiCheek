@@ -115,7 +115,7 @@ function AllocateTeams() {
         const allocateRandomlyValue = await allocateRandomly(tournamentId);
         setAllocatedRandomly(allocateRandomlyValue);
         createAllocatedGroupsArray();
-        //setTables(tablesRes);
+        setTables(tablesSample);
     }
 
     const onAllocateRandomly = () => {
@@ -143,7 +143,7 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                    dataSource={tables}>
                 </EditableGridTableComponent>
             ),
             title: 'Group B',
@@ -155,7 +155,7 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                    dataSource={tables}>
                 </EditableGridTableComponent>
             ),
             title: 'Group C',
@@ -167,7 +167,7 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                    dataSource={tables}>
                 </EditableGridTableComponent>
             ),
             title: 'Group D',
@@ -179,7 +179,7 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                    dataSource={tables}>
                 </EditableGridTableComponent>
             ),
             title: 'Group E',
@@ -191,7 +191,7 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                    dataSource={tables}>
                 </EditableGridTableComponent>
             ),
             title: 'Group F',
