@@ -58,6 +58,7 @@ function AllocateTeams() {
         setTeams(loadedTeams)
         setGroups(groupsSample);
         setDraggedItem([]);
+        setTables(tablesSample);
     }, [])
 
     const createAllocatedGroupsArray = () => {
@@ -75,23 +76,23 @@ function AllocateTeams() {
 
         });
         console.log("r",groupsAllocated);
-       // return  groupsAllocated.map((x, i) => ({
-       //      component: (
-       //          <EditableGridTableComponent
-       //              mode={TABLE_VIEW_MODE.READ}
-       //              columns={columnsHeaders}
-       //              dataSource={{
-       //                  ID: x.id,
-       //                  team: teams[x.id].name,
-       //                  region: teams[x.id].region
-       //              }}
-       //              >
-       //          </EditableGridTableComponent>
-       //      ),
-       //      title: x.group,
-       //      cols: 1,
-       //      rows: 1,
-       //  }));
+       return  groupsAllocated.map((x, i) => ({
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={{
+                        ID: x.id,
+                        team: teams[x.id].name,
+                        region: teams[x.id].region
+                    }}
+                    >
+                </EditableGridTableComponent>
+            ),
+            title: x.group,
+            cols: 1,
+            rows: 1,
+        }));
     }
 
     // const handleDragStart = (e) => {
@@ -121,81 +122,82 @@ function AllocateTeams() {
        void allocate();
     }
 
-    // const tablesSample = [
-    //     {
-    //         component: (
-    //             <EditableGridTableComponent
-    //                 mode={TABLE_VIEW_MODE.READ}
-    //                 columns={columnsHeaders}
-    //                 dataSource={table}
-    //                 onDragStart={handleDragStart}
-    //                 onDrop={handleDrop}>
-    //             </EditableGridTableComponent>
-    //         ),
-    //         title: 'Group A',
-    //         cols: 1,
-    //         rows: 1,
-    //     },
-    //     {
-    //         component: (
-    //             <EditableGridTableComponent
-    //                 mode={TABLE_VIEW_MODE.READ}
-    //                 columns={columnsHeaders}
-    //                 dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
-    //             </EditableGridTableComponent>
-    //         ),
-    //         title: 'Group B',
-    //         cols: 1,
-    //         rows: 1,
-    //     },
-    //     {
-    //         component: (
-    //             <EditableGridTableComponent
-    //                 mode={TABLE_VIEW_MODE.READ}
-    //                 columns={columnsHeaders}
-    //                 dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
-    //             </EditableGridTableComponent>
-    //         ),
-    //         title: 'Group C',
-    //         cols: 1,
-    //         rows: 1,
-    //     },
-    //     {
-    //         component: (
-    //             <EditableGridTableComponent
-    //                 mode={TABLE_VIEW_MODE.READ}
-    //                 columns={columnsHeaders}
-    //                 dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
-    //             </EditableGridTableComponent>
-    //         ),
-    //         title: 'Group D',
-    //         cols: 1,
-    //         rows: 1,
-    //     },
-    //     {
-    //         component: (
-    //             <EditableGridTableComponent
-    //                 mode={TABLE_VIEW_MODE.READ}
-    //                 columns={columnsHeaders}
-    //                 dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
-    //             </EditableGridTableComponent>
-    //         ),
-    //         title: 'Group E',
-    //         cols: 1,
-    //         rows: 1,
-    //     }, {
-    //
-    //         component: (
-    //             <EditableGridTableComponent
-    //                 mode={TABLE_VIEW_MODE.READ}
-    //                 columns={columnsHeaders}
-    //                 dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
-    //             </EditableGridTableComponent>
-    //         ),
-    //         title: 'Group F',
-    //         cols: 1,
-    //         rows: 1,
-    //     }];
+    const tablesSample = [
+        {
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={tables}
+                    // onDragStart={handleDragStart}
+                    // onDrop={handleDrop}
+                    >
+                </EditableGridTableComponent>
+            ),
+            title: 'Group A',
+            cols: 1,
+            rows: 1,
+        },
+        {
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                </EditableGridTableComponent>
+            ),
+            title: 'Group B',
+            cols: 1,
+            rows: 1,
+        },
+        {
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                </EditableGridTableComponent>
+            ),
+            title: 'Group C',
+            cols: 1,
+            rows: 1,
+        },
+        {
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                </EditableGridTableComponent>
+            ),
+            title: 'Group D',
+            cols: 1,
+            rows: 1,
+        },
+        {
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                </EditableGridTableComponent>
+            ),
+            title: 'Group E',
+            cols: 1,
+            rows: 1,
+        }, {
+
+            component: (
+                <EditableGridTableComponent
+                    mode={TABLE_VIEW_MODE.READ}
+                    columns={columnsHeaders}
+                    dataSource={[{ID: 0, shortname: 1, team: "RU"}]}>
+                </EditableGridTableComponent>
+            ),
+            title: 'Group F',
+            cols: 1,
+            rows: 1,
+        }];
     return (
         <div>
             <div className="max-w-6xl mx-auto font-tahoma p-12">
