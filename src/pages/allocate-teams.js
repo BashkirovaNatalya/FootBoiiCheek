@@ -7,14 +7,16 @@ import MultipleTablesComponent from "../shared/must-be-rework/multiple-tables-co
 import {ListBox, processListBoxDragAndDrop} from "@progress/kendo-react-listbox";
 import {allocateRandomly, getAllGroupsInTournament} from '../api/participant-api'
 import {getTeams} from "../api/teams_api";
+import { ColumnDefaultProps } from '@progress/kendo-react-data-tools';
 
 function AllocateTeams() {
-    const tournamentId = 0;
-    const [draggedItem, setDraggedItem] = useState([]);
+    const tournamentId = 1;
+    // const [draggedItem, setDraggedItem] = useState([]);
     const [teams, setTeams] = useState([]);
     const [tables, setTables] = useState([]);
-    const [allocatedRandomly, setAllocatedRandomly] = useState([]);
+    // const [allocatedRandomly, setAllocatedRandomly] = useState([]);
     const [groups, setGroups] = useState([]);
+
     const columnsHeaders = [{title: 'Region', field: 'region'}, {title: 'Team', field: 'team'}];
     const groupsSample = [
         {value: "A", name: "Group A"},
@@ -24,49 +26,50 @@ function AllocateTeams() {
         {value: "E", name: "Group E"},
         {value: "F", name: "Group F"},
     ]
-    const optionsSample = [
-        {
-            id: 1,
-            team: 'Belgium'
-        },
-        {
-            id: 2,
-            team: 'Germany'
-        },
-        {
-            id: 3,
-            team: 'England'
-        },
-        {
-            id: 4,
-            team: 'Iceland'
-        },
-        {
-            id: 5,
-            team: 'Italy'
-        }];
-    const tableSample = [
-        {
-            ID: 0,
-            shortname: 1,
-            team: "RU"
-        }];
+    // const optionsSample = [
+    //     {
+    //         id: 1,
+    //         team: 'Belgium'
+    //     },
+    //     {
+    //         id: 2,
+    //         team: 'Germany'
+    //     },
+    //     {
+    //         id: 3,
+    //         team: 'England'
+    //     },
+    //     {
+    //         id: 4,
+    //         team: 'Iceland'
+    //     },
+    //     {
+    //         id: 5,
+    //         team: 'Italy'
+    //     }];
+    // const tableSample = [
+    //     {
+    //         ID: 0,
+    //         shortname: 1,
+    //         team: "RU"
+    //     }];
 
     useEffect(async () => {
         const loadedTeams = await getTeams();
-        const loadedGroups = await getAllGroupsInTournament(tournamentId);
-        setTeams(loadedTeams)
+        //console.log(loadedTeams);
+        // const loadedGroups = await getAllGroupsInTournament(tournamentId);
+        setTeams(loadedTeams);
         setGroups(groupsSample);
-        setDraggedItem([]);
+        // setDraggedItem([]);
         setTables(tablesSample);
     }, [])
 
-    const createAllocatedGroupsArray = () => {
+    const createAllocatedGroupsArray = (allocateRandomlyValue) => {
         const groupsAllocated = groups.map(data => {
-            let groupArray = []
-            for(let i in allocatedRandomly){
-                if (allocatedRandomly[i].group == data.value){
-                    groupArray.push(allocatedRandomly[i].id)
+            let groupArray = [] 
+            for(let i in allocateRandomlyValue){
+                if (allocateRandomlyValue[i].group == data.value){
+                    groupArray.push(allocateRandomlyValue[i].id)
                 }
             }
 
@@ -75,21 +78,41 @@ function AllocateTeams() {
            }
 
         });
-        console.log("r",groupsAllocated);
+        console.log("groupsAllocated",groupsAllocated);
+        console.log("groupsAllocated 0",groupsAllocated[0]);
+        console.log("teams: ", teams);
+
+        // console.log("mapping",groupsAllocated.map((x) => x));
+
        return  groupsAllocated.map((x, i) => ({
             component: (
-                <EditableGridTableComponent
+                <EditableGridTableComponent key={x[groupsSample[i].value]}
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={{
-                        ID: x.id,
-                        team: teams[x.id].name,
-                        region: teams[x.id].region
-                    }}
+                    dataSource={[{
+                        ID: x[groupsSample[i].value][0],
+                        region: teams[x[groupsSample[i].value][0]-1].region,
+                        team: teams[x[groupsSample[i].value][0]-1].name 
+                    }, {
+                        ID: x[groupsSample[i].value][1],
+                        region: teams[x[groupsSample[i].value][1]-1].region,
+                        team: teams[x[groupsSample[i].value][1]-1].name 
+                    },
+                    {
+                        ID: x[groupsSample[i].value][2],
+                        region: teams[x[groupsSample[i].value][2]-1].region,
+                        team: teams[x[groupsSample[i].value][2]-1].name 
+                    },
+                    {
+                        ID: x[groupsSample[i].value][3],
+                        region: teams[x[groupsSample[i].value][3]-1].region,
+                        team: teams[x[groupsSample[i].value][3]-1].name 
+                    },
+                ]}
                     >
                 </EditableGridTableComponent>
             ),
-            title: x.group,
+            title: groupsSample[i].name,
             cols: 1,
             rows: 1,
         }));
@@ -112,15 +135,19 @@ function AllocateTeams() {
     // };
 
     const allocate = async () =>{
-        const allocateRandomlyValue = await allocateRandomly(tournamentId);
-        setAllocatedRandomly(allocateRandomlyValue);
-        createAllocatedGroupsArray();
-        setTables(tablesSample);
+        let allocateRandomlyValue = await allocateRandomly(tournamentId);
+        console.log("allocateRandomlyResponse: ", allocateRandomlyValue);
+        // setAllocatedRandomly(allocateRandomlyValue);
+        const tableValues = createAllocatedGroupsArray(await allocateRandomly(tournamentId));
+        setTables(tableValues);
     }
 
     const onAllocateRandomly = () => {
        void allocate();
     }
+
+
+    console.log("table value: ", tables);
 
     const tablesSample = [
         {
@@ -132,6 +159,7 @@ function AllocateTeams() {
                     // onDragStart={handleDragStart}
                     // onDrop={handleDrop}
                     >
+                        
                 </EditableGridTableComponent>
             ),
             title: 'Group A',
@@ -143,7 +171,13 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={tables}>
+                    dataSource={
+                        [{
+                            ID: 1,
+                            region: "a",
+                            name: "k" 
+                        }]
+                    }>
                 </EditableGridTableComponent>
             ),
             title: 'Group B',
