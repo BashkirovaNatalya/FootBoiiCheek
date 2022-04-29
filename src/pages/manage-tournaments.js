@@ -11,7 +11,8 @@ const ManageTournaments = () => {
     useEffect(async () => {
         const loadedTournaments = await getTournaments()
         setTournaments(loadedTournaments)
-    }, [])
+    }, []);
+    console.log("tournamens", tournaments)
 
     return (
         <>
