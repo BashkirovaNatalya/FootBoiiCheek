@@ -171,13 +171,7 @@ function AllocateTeams() {
                 <EditableGridTableComponent
                     mode={TABLE_VIEW_MODE.READ}
                     columns={columnsHeaders}
-                    dataSource={
-                        [{
-                            ID: 1,
-                            region: "a",
-                            name: "k" 
-                        }]
-                    }>
+                    dataSource={tables}>
                 </EditableGridTableComponent>
             ),
             title: 'Group B',
